@@ -175,7 +175,7 @@ playA.onclick = () =>{
         div.classList.remove("resultWin")
         div.classList.remove("resultLose")
         div.classList.remove("resultDraw")
-    },4000)
+    },2000)
 }
 
 const winP = () =>{
