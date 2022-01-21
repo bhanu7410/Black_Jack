@@ -91,3 +91,33 @@ div button{
 .playAgain{
     width:15rem;
 }
+
+.resultWin{
+    position:absolute;
+    transition:1s ease;
+    width:40rem;
+    height:20rem;
+    opacity:0;
+    background-image: url("https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/32505ae5322d0c1.png");
+}
+
+.resultLose{
+    position:absolute;
+    transition:1s ease;
+    width:40rem;
+    height:20rem;
+    opacity:0;
+    background-image: url("https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/8d3202a41dfe82e.png");
+    background-size: contain;
+}
+
+.resultDraw{
+    position:absolute;
+    transition:1s ease;
+    width:40rem;
+    height:20rem;
+    opacity:0;
+    background-image: url("https://www.seekpng.com/png/detail/352-3520672_repeat-repeat-icons.png");
+    background-size: contain;
+}
+

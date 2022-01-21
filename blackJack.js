@@ -5,6 +5,7 @@ const divB= document.querySelector(".divButtons")
 const hit = document.createElement('button')
 const stand = document.createElement('button')
 const playA = document.createElement('button')
+const div = document.createElement('div');
 
 const mainCards={
     1:[1,2,3,4,5,6,7,8,9,10,10,10],
@@ -26,6 +27,7 @@ stand.innerText="STAND"
 stand.classList.add("iii")
 playA.innerText="Play Again"
 playA.classList.add("playAgain")
+
 
 start.onclick = ()=>{
     cards = JSON.parse(JSON.stringify(mainCards));
@@ -68,15 +70,15 @@ hit.onclick =()=>{
     hit.classList.add("ani")
     if (p_val>21){
         lost()
+        winD()
         // break;
     }
     else if (p_val==21){
-        lost()
-        winP()
+        standFunc()
     }
 }
 
-stand.onclick = ()=>{
+const standFunc=()=>{
     while (p_val>d_val){
         set=Math.round(Math.random() * 3)+1
         d_val+=cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
@@ -84,11 +86,15 @@ stand.onclick = ()=>{
         dealer.innerText=`${d_val}`
         if (d_val>21){
             lost()
-            break;
+            winP()
         }
-        else if(p_val==21){
+        else if(d_val>p_val){
             lost()
             winD()
+        }
+        else if(d_val==p_val){
+            lost()
+            drawD()
         }
     }
 }
@@ -123,6 +129,21 @@ const lost = ()=>{
 playA.onclick = () =>{
     p_val=0
     d_val=0
+
+    const t = setInterval(()=>{
+        
+        op=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
+        if (op>0){
+            op-=2;
+            div.style.opacity=op;
+        }
+        else{
+            clearInterval(t);
+        }
+        console.log(t)
+    },1000)
+
+    
     setTimeout(()=>{
         // console.log("HOW ARE YOU ARE YOU ALIVE")
         playA.classList.remove("playAgain")
@@ -131,7 +152,7 @@ playA.onclick = () =>{
     setTimeout(()=>{
         playA.remove()
         
-    },1000)
+    },200)
 
     divB.append(start)
     start.classList.add("iii")
@@ -147,12 +168,68 @@ playA.onclick = () =>{
         dealer.innerText=`${d_val}`
         player.innerText=`${p_val}`
     },1000)
+
+    setTimeout(()=>{
+        div.style.opacity=0
+        div.remove()
+        div.classList.remove("resultWin")
+        div.classList.remove("resultLose")
+        div.classList.remove("resultDraw")
+    },4000)
 }
 
+const winP = () =>{
+    div.classList.add("resultWin")
 
+    document.querySelector(".cards").append(div)
+    const t = setInterval(()=>{
+        op=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
+        if (op<1){
+            op+=1;
+            div.style.opacity=op;
+        }
+        else{
+            clearInterval(t);
+        }
+        console.log(t)
+    },1000)
 
+}
+
+const winD = () =>{
+    div.classList.add("resultLose")
+    document.querySelector(".cards").append(div)
+    const t = setInterval(()=>{
+        op=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
+        if (op<1){
+            op+=1;
+            div.style.opacity=op;
+        }
+        else if (op>=1){
+            clearInterval(t);
+        }
+        console.log(t)
+    },200)
+}
+
+const drawD = () =>{
+    div.classList.add("resultDraw")
+    document.querySelector(".cards").append(div)
+    const t = setInterval(()=>{
+        op=Number(window.getComputedStyle(div).getPropertyValue("opacity"));
+        if (op<1){
+            op+=3;
+            div.style.opacity=op;
+        }
+        else{
+            clearInterval(t);
+        }
+        console.log(t)
+    },1000)
+}
 
 // console.log(Math.floor(Math.random()*cards[3].length)+1)
 // while (cards[set].length>0){
 //     console.log(cards[set])
 // }
+stand.onclick = standFunc

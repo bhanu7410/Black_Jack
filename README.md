@@ -1,5 +1,5 @@
 # Black_Jack
-1. A simple game of Black Jack with 1 dealer and 1 player 
-2. Need to implement win/lose transition
-3. Need to make mobile version with @media controls
-4. Need to implement "Ace" constraints
+## A simple game of Black Jack with 1 dealer and 1 player 
+1. Need to implement win/lose/draw transition-----DONE
+2. Need to make mobile version with @media controls
+3. Need to implement "Ace" constraints
