@@ -6,6 +6,7 @@ const hit = document.createElement('button')
 const stand = document.createElement('button')
 const playA = document.createElement('button')
 const div = document.createElement('div');
+const log =document.querySelector('.log')
 
 const mainCards={
     1:[1,2,3,4,5,6,7,8,9,10,10,10],
@@ -14,6 +15,7 @@ const mainCards={
     4:[1,2,3,4,5,6,7,8,9,10,10,10]
 }
 
+let logNum=1
 let t=0
 let p_val=0
 let d_val=0
@@ -30,18 +32,27 @@ playA.classList.add("playAgain")
 
 
 start.onclick = ()=>{
+    var card=0
     cards = JSON.parse(JSON.stringify(mainCards));
     set=Math.round(Math.random() * 3)+1
-    p_val+=cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    card = cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    p_val+=card
+    printD(card,"player")
     console.log(p_val)
     set=Math.round(Math.random() * 3)+1
-    p_val+=cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    card = cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    p_val+=card
+    printD(card,"player")
     console.log(p_val)
     set=Math.round(Math.random() * 3)+1
-    d_val+=cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    card = cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    d_val+=card
+    printD(card,"computer")
     console.log(d_val)
     set=Math.round(Math.random() * 3)+1
-    d_val+=cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    card = cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    d_val+=card
+    printD(card,"computer")
     console.log(d_val)
 
     dealer.innerText=`${d_val}`
@@ -63,39 +74,72 @@ start.onclick = ()=>{
 
 
 hit.onclick =()=>{
+    var card=0
     set=Math.round(Math.random() * 3)+1
-    p_val+=cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    card = cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+    p_val+=card
+    printP(card)
     console.log(p_val)
     player.innerText=`${p_val}`
     hit.classList.add("ani")
     if (p_val>21){
         lost()
         winD()
+        var temp = document.createElement('div')
+        temp.classList.add("trip")
+        temp.innerText=`You Exceeded the limit`
+        log.prepend(temp)
         // break;
     }
     else if (p_val==21){
+        var temp = document.createElement('div')
+        temp.classList.add("trip")
+        temp.innerText=`You HIT BLACK JACK`
+        log.prepend(temp)
         standFunc()
     }
 }
 
 const standFunc=()=>{
+    var temp = document.createElement('div')
+    temp.classList.add("trip")
     while (p_val>d_val){
+        var card=0
         set=Math.round(Math.random() * 3)+1
-        d_val+=cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+        card = cards[set].splice(Math.floor(Math.random()*cards[set].length),1)[0]
+        d_val+=card
+        printDeal(card)
         console.log(d_val)
         dealer.innerText=`${d_val}`
+        
         if (d_val>21){
             lost()
             winP()
+            temp.innerText=`Dealer exceeded the limit`
+            log.prepend(temp)
+            temp = document.createElement('div')
+            temp.classList.add("trip")
+            temp.innerText = "YOU WON....."
+            log.prepend(temp)
         }
         else if(d_val>p_val){
             lost()
             winD()
+            temp.innerText=`Dealer WON`
+            log.prepend(temp)
         }
         else if(d_val==p_val){
             lost()
             drawD()
+            temp.innerText=`The result is a draw`
+            log.prepend(temp)
         }
+    }
+    if(d_val>p_val && d_val<=21){
+        lost()
+        winD()
+        temp.innerText=`Dealer exceeded the limit`
+        log.prepend(temp)
     }
 }
 
@@ -129,6 +173,11 @@ const lost = ()=>{
 playA.onclick = () =>{
     p_val=0
     d_val=0
+
+    var temp = document.createElement('div')
+    temp.classList.add('trip')
+    temp.innerText="Let's Play Again"
+    log.prepend(temp)
 
     const t = setInterval(()=>{
         
@@ -228,6 +277,30 @@ const drawD = () =>{
     },1000)
 }
 
+const printD = (val,player)=>{
+    var temp = document.createElement('div')
+    if (player =="computer"){
+        temp.innerText = `${logNum}. Computer has taken card ${val} `
+    }
+    else{
+    temp.innerText = `${logNum}. Player has recieved card ${val} `
+    }
+    log.prepend(temp)
+    logNum++
+}
+
+const printP = val =>{
+    var temp = document.createElement('div')
+    temp.innerText=`${logNum}. Dealer responded to player hit and dealt ${val}`
+    log.prepend(temp)
+    logNum++
+}
+const printDeal = val =>{
+    var temp = document.createElement('div')
+    temp.innerText=`${logNum}. Dealer took card ${val}`
+    log.prepend(temp)
+    logNum++
+}
 // console.log(Math.floor(Math.random()*cards[3].length)+1)
 // while (cards[set].length>0){
 //     console.log(cards[set])
