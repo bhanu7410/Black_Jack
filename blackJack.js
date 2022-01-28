@@ -135,9 +135,14 @@ const standFunc=()=>{
             log.prepend(temp)
         }
     }
-    if(d_val>p_val && d_val<=21){
+    if(d_val>=p_val && d_val<=21){
         lost()
         winD()
+        if (d_val==p_val){
+            temp.innerText=`Dealer decided to leave it at Draw`
+            log.prepend(temp)    
+            breakß
+        }
         temp.innerText=`Dealer exceeded the limit`
         log.prepend(temp)
     }
@@ -291,7 +296,7 @@ const printD = (val,player)=>{
 
 const printP = val =>{
     var temp = document.createElement('div')
-    temp.innerText=`${logNum}. Dealer responded to player hit and dealt ${val}`
+    temp.innerText=`${logNum}. Dealer responded to player HIT and Dealt ${val}`
     log.prepend(temp)
     logNum++
 }
