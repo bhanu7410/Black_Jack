@@ -3,5 +3,4 @@
 1. Need to implement win/lose/draw transition-----DONE
 2. Need to make mobile version with @media controls
 3. Need to implement "Ace" constraints
-4. Log-----almost done
-5. Stand on equal scores.
+4. Need to initialise "?"

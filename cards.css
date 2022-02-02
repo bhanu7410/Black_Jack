@@ -132,3 +132,18 @@ section{
     height: 4rem;
     margin: 1rem 0 ;
 }
+nav{
+    width:100%;
+    background-color: #ffd000;
+    display:flex;
+    flex-wrap: wrap;
+    font-size: 2rem;
+}
+.title{
+    flex-grow: 1;
+}
+img{
+    width:1em;
+    height:1em;
+    transform:translateY(5px) ;
+}
